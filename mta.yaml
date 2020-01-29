@@ -1,0 +1,19 @@
+ID: TestSecuirty
+_schema-version: '2.1'
+version: 0.0.1
+
+modules:
+ - name: Sec_Test
+   type: hdb
+   path: Sec_Test
+   requires:
+    - name: hdi_Sec_Test
+
+resources:
+ - name: hdi_Sec_Test
+   parameters:
+      config:
+         schema: SC_SecTest
+   properties:
+      hdi-container-name: ${service-name}
+   type: com.sap.xs.hdi-container

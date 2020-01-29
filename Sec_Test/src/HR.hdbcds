@@ -1,0 +1,8 @@
+namespace TestSecuirty.Sec_Test;
+context HR{
+	entity Employee{
+		key Id : Integer generated always as identity ( start with 1 increment by 1 );
+		name : String(50);
+		Department : String (50);
+	};
+};
