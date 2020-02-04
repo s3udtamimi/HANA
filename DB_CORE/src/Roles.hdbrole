@@ -1,0 +1,12 @@
+{
+	"role": {
+		"name": "myrole",
+		"object_privileges": [
+			{
+				"name": "HR.Department",
+				"type": "TABLE",
+				"privileges": [ "SELECT", "INSERT" ]
+			}
+		]
+	}
+}

@@ -1,0 +1,29 @@
+ID: Security
+_schema-version: '2.1'
+version: 0.0.1
+modules:
+  - name: DB_CORE
+    type: hdb
+    path: DB_CORE
+    requires:
+      - name: hdi_DB_CORE
+        properties:
+          TARGET_CONTAINER: '~{hdi-container-name}'
+      - name: external_access
+        group: SERVICE-REPLACEMENTS
+        properties:
+          external_access: '~{ups-service-name}'
+resources:
+  - name: hdi_DB_CORE
+    parameters:
+      config:
+        schema: HR
+    properties:
+      hdi-container-name: '${service-name}'
+    type: com.sap.xs.hdi-container
+  - name: external_access
+    type: org.cloudfoundry.existing-service
+    parameters:
+      service-name: CC_ACCESS
+    properties:
+      ups-service-name: '${service-name}'

@@ -1,0 +1,15 @@
+context HR {
+
+entity Department {
+key Id: Integer generated always as identity ( start with 1 increment by 1 );
+Name : String(50);
+};
+
+entity Employee {
+key Id: Integer generated always as identity ( start with 1 increment by 1 );
+Name : String(50);
+DepartmentId: association to Department { Id };
+};
+
+
+};
