@@ -1,0 +1,41 @@
+{
+    "format_version": 1,
+    "imports": [
+        {
+            "target_table": "Eastwind.Product",
+            "source_data": {
+                "data_type": "CSV",
+                "file_name": "Product.csv",
+                "has_header": true,
+                "type_config": {
+				"delimiter": ","
+			}
+            },
+            "import_settings": {
+                "import_columns": [
+                    "Id",
+					"ProductName",
+					"SupplierId.Id",
+					"CategoryId.Id",
+					"QuantityPerUnit",
+					"UnitPrice",
+					"UnitsInStock",
+					"UnitsOnOrder",
+					"ReorderLevel",
+					"Discontinued" 
+				
+                ]
+            },
+            "column_mappings":{
+                    "Id":1,
+					"ProductName":2,
+					"SupplierId.Id":3,
+					"CategoryId.Id":4,
+					"QuantityPerUnit":5,
+					"UnitPrice":6,
+					"UnitsInStock":7,
+					"UnitsOnOrder":8,
+					"ReorderLevel":9,
+					"Discontinued" :10
+            }
+        }]}

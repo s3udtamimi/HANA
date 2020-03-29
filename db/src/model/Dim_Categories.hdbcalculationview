@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="Dim_Categories" applyPrivilegeType="SQL_ANALYTIC_PRIVILEGE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="Dim_Categories"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="Eastwind.Categories">
+    <resourceUri>Eastwind.Categories</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="Eastwind.Categories">
+  <attributes>
+    <attribute id="Id" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Id"/>
+      <keyMapping columnObjectName="Eastwind.Categories" columnName="Id"/>
+    </attribute>
+    <attribute id="CategoryName" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CategoryName"/>
+      <keyMapping columnObjectName="Eastwind.Categories" columnName="CategoryName"/>
+    </attribute>
+    <attribute id="Description" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Description"/>
+      <keyMapping columnObjectName="Eastwind.Categories" columnName="Description"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

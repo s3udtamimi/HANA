@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="Dim_Customer" applyPrivilegeType="SQL_ANALYTIC_PRIVILEGE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="Customer Dimension"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="Eastwind.Customer">
+    <resourceUri>Eastwind.Customer</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="Eastwind.Customer">
+  <attributes>
+    <attribute id="CustomerId" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Id"/>
+      <keyMapping columnObjectName="Eastwind.Customer" columnName="Id"/>
+    </attribute>
+    <attribute id="CustCompanyName" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Company Name"/>
+      <keyMapping columnObjectName="Eastwind.Customer" columnName="CompanyName"/>
+    </attribute>
+    <attribute id="CustContactName" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ContactName"/>
+      <keyMapping columnObjectName="Eastwind.Customer" columnName="ContactName"/>
+    </attribute>
+    <attribute id="CustContactTitle" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Contact Title"/>
+      <keyMapping columnObjectName="Eastwind.Customer" columnName="ContactTitle"/>
+    </attribute>
+    <attribute id="CustAddress_Address" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CustAddress_Address"/>
+      <keyMapping columnObjectName="Eastwind.Customer" columnName="CustAddress.Address"/>
+    </attribute>
+    <attribute id="CustAddress_City" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CustAddress_City"/>
+      <keyMapping columnObjectName="Eastwind.Customer" columnName="CustAddress.City"/>
+    </attribute>
+    <attribute id="CustAddress_Region" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CustAddress_Region"/>
+      <keyMapping columnObjectName="Eastwind.Customer" columnName="CustAddress.Region"/>
+    </attribute>
+    <attribute id="CustAddress_PostalCode" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CustAddress_PostalCode"/>
+      <keyMapping columnObjectName="Eastwind.Customer" columnName="CustAddress.PostalCode"/>
+    </attribute>
+    <attribute id="CustAddress_Country" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CustAddress_Country"/>
+      <keyMapping columnObjectName="Eastwind.Customer" columnName="CustAddress.Country"/>
+    </attribute>
+    <attribute id="CustContact_Phone" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CustContact_Phone"/>
+      <keyMapping columnObjectName="Eastwind.Customer" columnName="CustContact.Phone"/>
+    </attribute>
+    <attribute id="CustContact_Fax" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CustContact_Fax"/>
+      <keyMapping columnObjectName="Eastwind.Customer" columnName="CustContact.Fax"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

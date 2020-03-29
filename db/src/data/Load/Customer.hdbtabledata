@@ -1,0 +1,41 @@
+{
+    "format_version": 1,
+    "imports": [
+        {
+            "target_table": "Eastwind.Customer",
+            "source_data": {
+                "data_type": "CSV",
+                "file_name": "Customer.csv",
+                "has_header": false,
+                "type_config": {
+				"delimiter": ";"
+			}
+            },
+            "import_settings": {
+                "import_columns": [
+					"CompanyName",
+					"ContactName",
+					"ContactTitle",
+					"CustAddress.Address" ,
+					"CustAddress.City",
+					"CustAddress.Region" ,
+					"CustAddress.PostalCode" ,
+					"CustAddress.Country" ,
+					"CustContact.Phone" ,
+					"CustContact.Fax" 
+				
+                ]
+            },
+            "column_mappings":{
+					"CompanyName":2,
+					"ContactName":3,
+					"ContactTitle":4,
+					"CustAddress.Address":5 ,
+					"CustAddress.City":6,
+					"CustAddress.Region":7 ,
+					"CustAddress.PostalCode":8 ,
+					"CustAddress.Country":9 ,
+					"CustContact.Phone":10 ,
+					"CustContact.Fax":11
+            }
+        }]}

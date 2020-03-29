@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="Dim_Employee" applyPrivilegeType="SQL_ANALYTIC_PRIVILEGE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="Dim_Employee"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="Eastwind.Employee">
+    <resourceUri>Eastwind.Employee</resourceUri>
+  </DataSource>
+  <DataSource id="Eastwind.Department">
+    <resourceUri>Eastwind.Department</resourceUri>
+  </DataSource>
+  <DataSource id="Eastwind.Division">
+    <resourceUri>Eastwind.Division</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Employee">
+    <viewAttributes>
+      <viewAttribute id="Id"/>
+      <viewAttribute id="LastName"/>
+      <viewAttribute id="FirstName"/>
+      <viewAttribute id="Title"/>
+      <viewAttribute id="TitleOfCourtesy"/>
+      <viewAttribute id="Gender"/>
+      <viewAttribute id="BirthDate"/>
+      <viewAttribute id="HireDate"/>
+      <viewAttribute id="EmpAddress_Address"/>
+      <viewAttribute id="EmpAddress_City"/>
+      <viewAttribute id="EmpAddress_Region"/>
+      <viewAttribute id="EmpAddress_PostalCode"/>
+      <viewAttribute id="EmpAddress_Country"/>
+      <viewAttribute id="HomePhone"/>
+      <viewAttribute id="Extension"/>
+      <viewAttribute id="ReportsTo"/>
+      <viewAttribute id="CurrentSalary"/>
+      <viewAttribute id="Commission"/>
+      <viewAttribute id="DivisionId"/>
+      <viewAttribute id="DepartmentId"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Eastwind.Employee">
+      <mapping xsi:type="Calculation:AttributeMapping" target="EmpAddress_Address" source="EmpAddress.Address"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EmpAddress_City" source="EmpAddress.City"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EmpAddress_Region" source="EmpAddress.Region"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EmpAddress_PostalCode" source="EmpAddress.PostalCode"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EmpAddress_Country" source="EmpAddress.Country"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Department">
+    <viewAttributes>
+      <viewAttribute id="Id"/>
+      <viewAttribute id="DepartmentName"/>
+      <viewAttribute id="DivisionId"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Eastwind.Department"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Division">
+    <viewAttributes>
+      <viewAttribute id="Id"/>
+      <viewAttribute id="DivisionName"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Eastwind.Division"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1_1" cardinality="CN_1" joinType="inner" multiJoinNode="Join_1" multiJoinCentralTable="Employee" multiJoinOrder="Outside In">
+    <viewAttributes>
+      <viewAttribute id="DepartmentName"/>
+      <viewAttribute id="DivisionName"/>
+      <viewAttribute id="Id"/>
+      <viewAttribute hidden="true" id="JOIN$DivisionId$Id"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Department">
+      <mapping xsi:type="Calculation:AttributeMapping" target="DepartmentName" source="DepartmentName"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Id" source="Id"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DivisionId$Id" source="DivisionId"/>
+    </input>
+    <input node="Division">
+      <mapping xsi:type="Calculation:AttributeMapping" target="DivisionName" source="DivisionName"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DivisionId$Id" source="Id"/>
+    </input>
+    <joinAttribute name="JOIN$DivisionId$Id"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1_2" cardinality="CN_1" joinType="leftOuter" multiJoinNode="Join_1" multiJoinCentralTable="Employee" multiJoinOrder="Outside In">
+    <viewAttributes>
+      <viewAttribute id="Id"/>
+      <viewAttribute id="LastName"/>
+      <viewAttribute id="FirstName"/>
+      <viewAttribute id="Title"/>
+      <viewAttribute id="TitleOfCourtesy"/>
+      <viewAttribute id="Gender"/>
+      <viewAttribute id="BirthDate"/>
+      <viewAttribute id="HireDate"/>
+      <viewAttribute id="EmpAddress_Address"/>
+      <viewAttribute id="EmpAddress_City"/>
+      <viewAttribute id="EmpAddress_Region"/>
+      <viewAttribute id="EmpAddress_PostalCode"/>
+      <viewAttribute id="EmpAddress_Country"/>
+      <viewAttribute id="HomePhone"/>
+      <viewAttribute id="Extension"/>
+      <viewAttribute id="ReportsTo"/>
+      <viewAttribute id="CurrentSalary"/>
+      <viewAttribute id="Commission"/>
+      <viewAttribute id="DepartmentName"/>
+      <viewAttribute id="DivisionName"/>
+      <viewAttribute hidden="true" id="JOIN$DepartmentId$Id"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Employee">
+      <mapping xsi:type="Calculation:AttributeMapping" target="Id" source="Id"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="LastName" source="LastName"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="FirstName" source="FirstName"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Title" source="Title"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="TitleOfCourtesy" source="TitleOfCourtesy"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Gender" source="Gender"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="BirthDate" source="BirthDate"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="HireDate" source="HireDate"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EmpAddress_Address" source="EmpAddress_Address"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EmpAddress_City" source="EmpAddress_City"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EmpAddress_Region" source="EmpAddress_Region"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EmpAddress_PostalCode" source="EmpAddress_PostalCode"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EmpAddress_Country" source="EmpAddress_Country"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="HomePhone" source="HomePhone"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Extension" source="Extension"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ReportsTo" source="ReportsTo"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CurrentSalary" source="CurrentSalary"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Commission" source="Commission"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DepartmentId$Id" source="DepartmentId"/>
+    </input>
+    <input node="Join_1_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="DepartmentName" source="DepartmentName"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DivisionName" source="DivisionName"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DepartmentId$Id" source="Id"/>
+    </input>
+    <joinAttribute name="JOIN$DepartmentId$Id"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Join_1_2">
+  <attributes>
+    <attribute id="EmployeeId" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Id"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="Id"/>
+    </attribute>
+    <attribute id="LastName" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="LastName"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="LastName"/>
+    </attribute>
+    <attribute id="FirstName" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FirstName"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="FirstName"/>
+    </attribute>
+    <attribute id="Title" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Title"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="Title"/>
+    </attribute>
+    <attribute id="TitleOfCourtesy" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="TitleOfCourtesy"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="TitleOfCourtesy"/>
+    </attribute>
+    <attribute id="Gender" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Gender"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="Gender"/>
+    </attribute>
+    <attribute id="BirthDate" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="BirthDate"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="BirthDate"/>
+    </attribute>
+    <attribute id="HireDate" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="HireDate"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="HireDate"/>
+    </attribute>
+    <attribute id="EmpAddress_Address" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="EmpAddress_Address"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="EmpAddress_Address"/>
+    </attribute>
+    <attribute id="EmpAddress_City" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="EmpAddress_City"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="EmpAddress_City"/>
+    </attribute>
+    <attribute id="EmpAddress_Region" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="EmpAddress_Region"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="EmpAddress_Region"/>
+    </attribute>
+    <attribute id="EmpAddress_PostalCode" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="EmpAddress_PostalCode"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="EmpAddress_PostalCode"/>
+    </attribute>
+    <attribute id="EmpAddress_Country" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="EmpAddress_Country"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="EmpAddress_Country"/>
+    </attribute>
+    <attribute id="HomePhone" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="HomePhone"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="HomePhone"/>
+    </attribute>
+    <attribute id="Extension" order="15" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Extension"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="Extension"/>
+    </attribute>
+    <attribute id="ReportsTo" order="16" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ReportsTo"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="ReportsTo"/>
+    </attribute>
+    <attribute id="CurrentSalary" order="17" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CurrentSalary"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="CurrentSalary"/>
+    </attribute>
+    <attribute id="Commission" order="18" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Commission"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="Commission"/>
+    </attribute>
+    <attribute id="DepartmentName" order="19" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DepartmentName"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="DepartmentName"/>
+    </attribute>
+    <attribute id="DivisionName" order="20" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DivisionName"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="DivisionName"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="361" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Employee" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="91" y="391"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Department" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="512" y="391"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Division" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="302" y="391"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="302" y="236"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Employee" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
+      <upperLeftCorner x="20" y="20"/>
+      <rectangleSize width="211"/>
+    </shape>
+    <shape modelObjectName="Department" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="130"/>
+    </shape>
+    <shape modelObjectName="Division" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
+      <upperLeftCorner x="620" y="30"/>
+      <rectangleSize width="110"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

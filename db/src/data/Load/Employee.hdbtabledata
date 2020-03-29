@@ -1,0 +1,61 @@
+{
+    "format_version": 1,
+    "imports": [
+        {
+            "target_table": "Eastwind.Employee",
+            "source_data": {
+                "data_type": "CSV",
+                "file_name": "Employee.csv",
+                "has_header": true,
+                "type_config": {
+				"delimiter": ","
+			}
+            },
+            "import_settings": {
+                "import_columns": [
+					"Id",
+					"LastName",
+					"FirstName",
+					"Title",
+					"TitleOfCourtesy",
+					"Gender",
+					"BirthDate",
+					"HireDate",
+					"EmpAddress.Address",
+					"EmpAddress.City",
+					"EmpAddress.Region",
+					"EmpAddress.PostalCode",
+					"EmpAddress.Country",
+					"HomePhone",
+					"Extension",
+					"ReportsTo",
+					"CurrentSalary",
+					"Commission",
+					"DivisionId",
+					"DepartmentId"
+				
+                ]
+            },
+            "column_mappings":{
+					"Id":1,
+					"LastName":2,
+					"FirstName":3,
+					"Title":4,
+					"TitleOfCourtesy":5,
+					"Gender":6,
+					"BirthDate":7,
+					"HireDate":8,
+					"EmpAddress.Address":9,
+					"EmpAddress.City":10,
+					"EmpAddress.Region":11,
+					"EmpAddress.PostalCode":12,
+					"EmpAddress.Country":13,
+					"HomePhone":14,
+					"Extension":15,
+					"ReportsTo":16,
+					"CurrentSalary":17,
+					"Commission":18,
+					"DivisionId":19,
+					"DepartmentId":20
+            }
+        }]}

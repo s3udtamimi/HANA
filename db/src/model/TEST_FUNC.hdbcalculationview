@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Variable="http://www.sap.com/ndb/BiModelVariable.ecore" id="TEST_FUNC" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="TEST_FUNC"/>
+<localVariables>
+  <variable id="IM_FIRSTNAME" parameter="true">
+    <descriptions defaultDescription=" "/>
+    <variableProperties datatype="NVARCHAR" length="40">
+      <valueDomain type="empty"/>
+      <selection/>
+    </variableProperties>
+  </variable>
+  <variable id="IM_MIDDLENAME" parameter="true">
+    <descriptions defaultDescription=" "/>
+    <variableProperties datatype="NVARCHAR" length="40">
+      <valueDomain type="empty"/>
+      <selection/>
+    </variableProperties>
+  </variable>
+  <variable id="IM_LASTNAME" parameter="true">
+    <descriptions defaultDescription=" "/>
+    <variableProperties datatype="NVARCHAR" length="40">
+      <valueDomain type="empty"/>
+      <selection/>
+    </variableProperties>
+  </variable>
+  <variable id="IM_EMPLOYEEID" parameter="true">
+    <descriptions defaultDescription=" "/>
+    <variableProperties datatype="NVARCHAR" length="10">
+      <valueDomain type="empty"/>
+      <selection/>
+    </variableProperties>
+  </variable>
+</localVariables>
+<variableMappings/>
+<dataSources/>
+<calculationViews>
+  <calculationView xsi:type="Calculation:TableFunctionView" id="TableFunction_1" tableFunctionName="get_full_name">
+    <viewAttributes/>
+    <calculatedViewAttributes/>
+    <variableMapping xsi:type="Variable:VariableMapping">
+      <targetVariable name="IM_FIRSTNAME"/>
+      <localVariable>IM_FIRSTNAME</localVariable>
+    </variableMapping>
+    <variableMapping xsi:type="Variable:VariableMapping">
+      <targetVariable name="IM_MIDDLENAME"/>
+      <localVariable>IM_MIDDLENAME</localVariable>
+    </variableMapping>
+    <variableMapping xsi:type="Variable:VariableMapping">
+      <targetVariable name="IM_LASTNAME"/>
+      <localVariable>IM_LASTNAME</localVariable>
+    </variableMapping>
+    <variableMapping xsi:type="Variable:VariableMapping">
+      <targetVariable name="IM_EMPLOYEEID"/>
+      <localVariable>IM_EMPLOYEEID</localVariable>
+    </variableMapping>
+  </calculationView>
+</calculationViews>
+<logicalModel id="TableFunction_1">
+  <attributes>
+    <attribute id="FULLNAME" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="FULLNAME"/>
+      <keyMapping columnObjectName="TableFunction_1" columnName="FULLNAME"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="TableFunction_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="60" y="332"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

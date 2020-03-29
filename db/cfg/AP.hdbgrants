@@ -1,0 +1,18 @@
+{
+	"MyHdi": {
+
+		"object_owner" :{
+			"schema_analytic_privileges":[{
+				"privileges": ["UserAccess"]
+		   
+				}]
+		},
+		
+		"application_user" :{
+			"schema_analytic_privileges":[{
+				"privileges": ["UserAccess"]
+		   
+				}]
+		}
+    }
+ }

@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="Product_Text" applyPrivilegeType="SQL_ANALYTIC_PRIVILEGE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="Product_Text"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="Eastwind.OrderDetails">
+    <resourceUri>Eastwind.OrderDetails</resourceUri>
+  </DataSource>
+  <DataSource id="Eastwind.Orders">
+    <resourceUri>Eastwind.Orders</resourceUri>
+  </DataSource>
+  <DataSource id="Eastwind.Product">
+    <resourceUri>Eastwind.Product</resourceUri>
+  </DataSource>
+  <DataSource id="Product_TEXT">
+    <resourceUri>Product_TEXT</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Sale">
+    <viewAttributes>
+      <viewAttribute id="OrderId"/>
+      <viewAttribute id="ProductId"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Eastwind.OrderDetails"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Order">
+    <viewAttributes>
+      <viewAttribute id="Id"/>
+      <viewAttribute id="OrderDate"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Eastwind.Orders"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Product">
+    <viewAttributes>
+      <viewAttribute id="Id"/>
+      <viewAttribute id="ProductName"/>
+      <viewAttribute id="SupplierId_Id"/>
+      <viewAttribute id="CategoryId_Id"/>
+      <viewAttribute id="QuantityPerUnit"/>
+      <viewAttribute id="UnitPrice"/>
+      <viewAttribute id="UnitsInStock"/>
+      <viewAttribute id="UnitsOnOrder"/>
+      <viewAttribute id="ReorderLevel"/>
+      <viewAttribute id="Discontinued"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Eastwind.Product">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SupplierId_Id" source="SupplierId.Id"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CategoryId_Id" source="CategoryId.Id"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Text">
+    <viewAttributes>
+      <viewAttribute id="ProductId"/>
+      <viewAttribute id="Language"/>
+      <viewAttribute id="Text"/>
+      <viewAttribute id="ValidFrom"/>
+      <viewAttribute id="ValidTo"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Product_TEXT"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+    <viewAttributes>
+      <viewAttribute id="OrderID"/>
+      <viewAttribute id="OrderDate"/>
+      <viewAttribute id="Id"/>
+      <viewAttribute id="SupplierId_Id"/>
+      <viewAttribute id="CategoryId_Id"/>
+      <viewAttribute id="QuantityPerUnit"/>
+      <viewAttribute id="UnitPrice"/>
+      <viewAttribute id="UnitsInStock"/>
+      <viewAttribute id="UnitsOnOrder"/>
+      <viewAttribute id="ReorderLevel"/>
+      <viewAttribute id="Discontinued"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Join_1_2"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:NonEquiJoinView" id="NonEquiJoin_1" cardinality="C1_N" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="OrderID"/>
+      <viewAttribute id="OrderDate"/>
+      <viewAttribute id="Id"/>
+      <viewAttribute id="Language"/>
+      <viewAttribute id="Text"/>
+      <viewAttribute id="ValidFrom"/>
+      <viewAttribute id="ValidTo"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Projection_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="OrderID" source="OrderID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OrderDate" source="OrderDate"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Id" source="Id"/>
+    </input>
+    <input node="Text">
+      <mapping xsi:type="Calculation:AttributeMapping" target="Language" source="Language"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Text" source="Text"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ValidFrom" source="ValidFrom"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ValidTo" source="ValidTo"/>
+    </input>
+    <joinAttribute leftColumn="Id" rightColumn="ProductId" operator="EQ"/>
+    <joinAttribute leftColumn="OrderDate" rightColumn="ValidFrom" operator="GE"/>
+    <joinAttribute leftColumn="OrderDate" rightColumn="ValidTo" operator="LE"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1_1" cardinality="C1_N" joinType="inner" multiJoinNode="Join_1" multiJoinCentralTable="Sale" multiJoinOrder="Outside In">
+    <viewAttributes>
+      <viewAttribute id="Id"/>
+      <viewAttribute id="SupplierId_Id"/>
+      <viewAttribute id="CategoryId_Id"/>
+      <viewAttribute id="QuantityPerUnit"/>
+      <viewAttribute id="UnitPrice"/>
+      <viewAttribute id="UnitsInStock"/>
+      <viewAttribute id="UnitsOnOrder"/>
+      <viewAttribute id="ReorderLevel"/>
+      <viewAttribute id="Discontinued"/>
+      <viewAttribute id="OrderId"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Product">
+      <mapping xsi:type="Calculation:AttributeMapping" target="Id" source="Id"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SupplierId_Id" source="SupplierId_Id"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CategoryId_Id" source="CategoryId_Id"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="QuantityPerUnit" source="QuantityPerUnit"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="UnitPrice" source="UnitPrice"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="UnitsInStock" source="UnitsInStock"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="UnitsOnOrder" source="UnitsOnOrder"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ReorderLevel" source="ReorderLevel"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Discontinued" source="Discontinued"/>
+    </input>
+    <input node="Sale">
+      <mapping xsi:type="Calculation:AttributeMapping" target="OrderId" source="OrderId"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Id" source="ProductId"/>
+    </input>
+    <joinAttribute name="Id"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1_2" cardinality="CN_1" joinType="inner" multiJoinNode="Join_1" multiJoinCentralTable="Sale" multiJoinOrder="Outside In">
+    <viewAttributes>
+      <viewAttribute id="OrderID"/>
+      <viewAttribute id="OrderDate"/>
+      <viewAttribute id="Id"/>
+      <viewAttribute id="SupplierId_Id"/>
+      <viewAttribute id="CategoryId_Id"/>
+      <viewAttribute id="QuantityPerUnit"/>
+      <viewAttribute id="UnitPrice"/>
+      <viewAttribute id="UnitsInStock"/>
+      <viewAttribute id="UnitsOnOrder"/>
+      <viewAttribute id="ReorderLevel"/>
+      <viewAttribute id="Discontinued"/>
+      <viewAttribute hidden="true" id="JOIN$OrderId$Id"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Join_1_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="Id" source="Id"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SupplierId_Id" source="SupplierId_Id"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CategoryId_Id" source="CategoryId_Id"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="QuantityPerUnit" source="QuantityPerUnit"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="UnitPrice" source="UnitPrice"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="UnitsInStock" source="UnitsInStock"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="UnitsOnOrder" source="UnitsOnOrder"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ReorderLevel" source="ReorderLevel"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Discontinued" source="Discontinued"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$OrderId$Id" source="OrderId"/>
+    </input>
+    <input node="Order">
+      <mapping xsi:type="Calculation:AttributeMapping" target="OrderDate" source="OrderDate"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OrderID" source="Id"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$OrderId$Id" source="Id"/>
+    </input>
+    <joinAttribute name="JOIN$OrderId$Id"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="NonEquiJoin_1">
+  <attributes>
+    <attribute id="OrderID" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="OrderID"/>
+      <keyMapping columnObjectName="NonEquiJoin_1" columnName="OrderID"/>
+    </attribute>
+    <attribute id="OrderDate" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="OrderDate"/>
+      <keyMapping columnObjectName="NonEquiJoin_1" columnName="OrderDate"/>
+    </attribute>
+    <attribute id="Id" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Id"/>
+      <keyMapping columnObjectName="NonEquiJoin_1" columnName="Id"/>
+    </attribute>
+    <attribute id="Language" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Language"/>
+      <keyMapping columnObjectName="NonEquiJoin_1" columnName="Language"/>
+    </attribute>
+    <attribute id="Text" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Text"/>
+      <keyMapping columnObjectName="NonEquiJoin_1" columnName="Text"/>
+    </attribute>
+    <attribute id="ValidFrom" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ValidFrom"/>
+      <keyMapping columnObjectName="NonEquiJoin_1" columnName="ValidFrom"/>
+    </attribute>
+    <attribute id="ValidTo" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ValidTo"/>
+      <keyMapping columnObjectName="NonEquiJoin_1" columnName="ValidTo"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="424" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Sale" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="636"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Order" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="302" y="636"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Product" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="512" y="636"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Text" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="502" y="356"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="292" y="356"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="NonEquiJoin_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="424" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Projection_1" modelObjectNameSpace="NonEquiJoin_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="163"/>
+    </shape>
+    <shape modelObjectName="Text" modelObjectNameSpace="NonEquiJoin_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="135"/>
+    </shape>
+  <shape><upperLeftCorner/><rectangleSize/></shape><shape><upperLeftCorner/><rectangleSize/></shape><shape><upperLeftCorner/><rectangleSize/></shape><shape><upperLeftCorner/><rectangleSize/></shape>
+  
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="302" y="481"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Sale" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
+      <upperLeftCorner x="431" y="43"/>
+      <rectangleSize width="133"/>
+    </shape>
+    <shape modelObjectName="Order" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
+      <upperLeftCorner x="115" y="43"/>
+      <rectangleSize width="137"/>
+    </shape>
+    <shape modelObjectName="Product" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
+      <upperLeftCorner x="620" y="30"/>
+      <rectangleSize width="163"/>
+    </shape></shapes>
+</layout>
+</Calculation:scenario>

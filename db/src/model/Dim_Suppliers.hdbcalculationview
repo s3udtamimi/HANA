@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="Dim_Suppliers" applyPrivilegeType="SQL_ANALYTIC_PRIVILEGE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="Dim_Suppliers"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="Eastwind.Suppliers">
+    <resourceUri>Eastwind.Suppliers</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<logicalModel id="Eastwind.Suppliers">
+  <attributes>
+    <attribute id="SupplierId" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Id"/>
+      <keyMapping columnObjectName="Eastwind.Suppliers" columnName="Id"/>
+    </attribute>
+    <attribute id="SuppCompanyName" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CompanyName"/>
+      <keyMapping columnObjectName="Eastwind.Suppliers" columnName="CompanyName"/>
+    </attribute>
+    <attribute id="SuppContactName" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ContactName"/>
+      <keyMapping columnObjectName="Eastwind.Suppliers" columnName="ContactName"/>
+    </attribute>
+    <attribute id="SuppContactTitle" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ContactTitle"/>
+      <keyMapping columnObjectName="Eastwind.Suppliers" columnName="ContactTitle"/>
+    </attribute>
+    <attribute id="SuppAddress_Address" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SuppAddress_Address"/>
+      <keyMapping columnObjectName="Eastwind.Suppliers" columnName="SuppAddress.Address"/>
+    </attribute>
+    <attribute id="SuppAddress_City" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SuppAddress_City"/>
+      <keyMapping columnObjectName="Eastwind.Suppliers" columnName="SuppAddress.City"/>
+    </attribute>
+    <attribute id="SuppAddress_Region" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SuppAddress_Region"/>
+      <keyMapping columnObjectName="Eastwind.Suppliers" columnName="SuppAddress.Region"/>
+    </attribute>
+    <attribute id="SuppAddress_PostalCode" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SuppAddress_PostalCode"/>
+      <keyMapping columnObjectName="Eastwind.Suppliers" columnName="SuppAddress.PostalCode"/>
+    </attribute>
+    <attribute id="SuppAddress_Country" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SuppAddress_Country"/>
+      <keyMapping columnObjectName="Eastwind.Suppliers" columnName="SuppAddress.Country"/>
+    </attribute>
+    <attribute id="SuppContact_Phone" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SuppContact_Phone"/>
+      <keyMapping columnObjectName="Eastwind.Suppliers" columnName="SuppContact.Phone"/>
+    </attribute>
+    <attribute id="SuppContact_Fax" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SuppContact_Fax"/>
+      <keyMapping columnObjectName="Eastwind.Suppliers" columnName="SuppContact.Fax"/>
+    </attribute>
+    <attribute id="HomePage" order="12" displayAttribute="false" attributeHierarchyActive="false" hidden="true">
+      <descriptions defaultDescription="HomePage"/>
+      <keyMapping columnObjectName="Eastwind.Suppliers" columnName="HomePage"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

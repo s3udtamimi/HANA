@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="Buid_Sales_Fact" applyPrivilegeType="SQL_ANALYTIC_PRIVILEGE" dataCategory="DEFAULT" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="Buid_Sales_Fact"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="Eastwind.OrderDetails">
+    <resourceUri>Eastwind.OrderDetails</resourceUri>
+  </DataSource>
+  <DataSource id="Eastwind.Product">
+    <resourceUri>Eastwind.Product</resourceUri>
+  </DataSource>
+  <DataSource id="Eastwind.Orders">
+    <resourceUri>Eastwind.Orders</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Sales">
+    <viewAttributes>
+      <viewAttribute id="OrderId"/>
+      <viewAttribute id="ProductId"/>
+      <viewAttribute id="UnitPrice"/>
+      <viewAttribute id="Quantity"/>
+      <viewAttribute id="Discount"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Eastwind.OrderDetails"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Product">
+    <viewAttributes>
+      <viewAttribute id="Id"/>
+      <viewAttribute id="SupplierId_Id"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Eastwind.Product">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SupplierId_Id" source="SupplierId.Id"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Order">
+    <viewAttributes>
+      <viewAttribute id="Id"/>
+      <viewAttribute id="CustomerId"/>
+      <viewAttribute id="EmployeeId"/>
+      <viewAttribute id="ShipVia"/>
+    
+      <viewAttribute id="OrderDate"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Eastwind.Orders"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1_1" cardinality="CN_1" joinType="inner" multiJoinNode="Join_1" multiJoinCentralTable="Sales" multiJoinOrder="Outside In">
+    <viewAttributes>
+      <viewAttribute id="OrderId" aggregationType="sum"/>
+      <viewAttribute id="ProductId" aggregationType="sum"/>
+      <viewAttribute id="UnitPrice" aggregationType="sum"/>
+      <viewAttribute id="Quantity" aggregationType="sum"/>
+      <viewAttribute id="Discount" aggregationType="sum"/>
+      <viewAttribute id="SupplierId_Id" aggregationType="sum"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Sales">
+      <mapping xsi:type="Calculation:AttributeMapping" target="OrderId" source="OrderId"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ProductId" source="ProductId"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="UnitPrice" source="UnitPrice"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Quantity" source="Quantity"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Discount" source="Discount"/>
+    </input>
+    <input node="Product">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SupplierId_Id" source="SupplierId_Id"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ProductId" source="Id"/>
+    </input>
+    <joinAttribute name="ProductId"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1_2" cardinality="CN_1" joinType="inner" multiJoinNode="Join_1" multiJoinCentralTable="Sales" multiJoinOrder="Outside In">
+    <viewAttributes>
+      <viewAttribute id="OrderId" aggregationType="sum"/>
+      <viewAttribute id="ProductId" aggregationType="sum"/>
+      <viewAttribute id="UnitPrice" aggregationType="sum"/>
+      <viewAttribute id="Quantity" aggregationType="sum"/>
+      <viewAttribute id="Discount" aggregationType="sum"/>
+      <viewAttribute id="CustomerId" aggregationType="sum"/>
+      <viewAttribute id="EmployeeId" aggregationType="sum"/>
+      <viewAttribute id="ShipVia" aggregationType="sum"/>
+      <viewAttribute id="SupplierId_Id" aggregationType="sum"/>
+      <viewAttribute id="OrderDate" aggregationType="min"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Join_1_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="OrderId" source="OrderId"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ProductId" source="ProductId"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="UnitPrice" source="UnitPrice"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Quantity" source="Quantity"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Discount" source="Discount"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SupplierId_Id" source="SupplierId_Id"/>
+    </input>
+    <input node="Order">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CustomerId" source="CustomerId"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EmployeeId" source="EmployeeId"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ShipVia" source="ShipVia"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OrderDate" source="OrderDate"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OrderId" source="Id"/>
+    </input>
+    <joinAttribute name="OrderId"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Join_1_2">
+  <attributes>
+    <attribute id="OrderId" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="OrderId"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="OrderId"/>
+    </attribute>
+    <attribute id="ProductId" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ProductId"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="ProductId"/>
+    </attribute>
+    <attribute id="CustomerId" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CustomerId"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="CustomerId"/>
+    </attribute>
+    <attribute id="EmployeeId" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="EmployeeId"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="EmployeeId"/>
+    </attribute>
+    <attribute id="ShipVia" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ShipVia"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="ShipVia"/>
+    </attribute>
+    <attribute id="SupplierId_Id" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="SupplierId_Id"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="SupplierId_Id"/>
+    </attribute>
+  
+    <attribute id="OrderDateTime" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="OrderDateTime"/>
+  
+      <keyMapping columnObjectName="Join_1_2" columnName="OrderDate"/>
+  
+    </attribute>
+  
+    <attribute id="UnitPrice" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="UnitPrice"/>
+  
+      <keyMapping columnObjectName="Join_1_2" columnName="UnitPrice"/>
+  
+    </attribute>
+    <attribute id="Quantity" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Quantity"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="Quantity"/>
+    </attribute>
+    <attribute id="Discount" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Discount"/>
+      <keyMapping columnObjectName="Join_1_2" columnName="Discount"/>
+    </attribute></attributes>
+  <calculatedAttributes>
+    <calculatedAttribute id="OrderDate" order="11" semanticType="empty" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="OrderDate"/>
+      <keyCalculation datatype="DATE" expressionLanguage="SQL">
+        <formula>TO_DATE(&quot;OrderDateTime&quot;)</formula>
+      </keyCalculation>
+    </calculatedAttribute>
+  </calculatedAttributes>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Sales" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="60" y="399"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Product" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="284" y="382"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Order" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="-230" y="352"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="70" y="226"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Order" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
+      <upperLeftCorner x="491" y="41"/>
+      <rectangleSize width="144"/>
+    </shape>
+    <shape modelObjectName="Sales" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
+      <upperLeftCorner x="261" y="32"/>
+      <rectangleSize width="133"/>
+    </shape>
+    <shape modelObjectName="Product" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">
+      <upperLeftCorner x="620" y="30"/>
+      <rectangleSize width="150"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

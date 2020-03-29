@@ -1,0 +1,19 @@
+{
+  "Product-Access": {
+    "object_owner" : {
+      "schema_privileges":[
+        {
+          "reference":"PRODUCT",
+          "privileges_with_grant_option":["SELECT", "SELECT METADATA"]
+        }
+      ]},
+    "application_user" : {
+        "schema_privileges":[
+        {
+        "reference":"PRODUCT",
+        "privileges_with_grant_option":["SELECT", "SELECT METADATA"]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="Dim_Product" applyPrivilegeType="SQL_ANALYTIC_PRIVILEGE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="Dim_Product"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="Eastwind.Product">
+    <resourceUri>Eastwind.Product</resourceUri>
+  </DataSource>
+  <DataSource id="Categories">
+    <resourceUri>Categories</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Product">
+    <viewAttributes>
+      <viewAttribute id="Id"/>
+      <viewAttribute id="ProductName"/>
+      <viewAttribute id="SupplierId_Id"/>
+      <viewAttribute id="CategoryId_Id"/>
+      <viewAttribute id="QuantityPerUnit"/>
+      <viewAttribute id="UnitPrice"/>
+      <viewAttribute id="UnitsInStock"/>
+      <viewAttribute id="UnitsOnOrder"/>
+      <viewAttribute id="ReorderLevel"/>
+      <viewAttribute id="Discontinued"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Eastwind.Product">
+      <mapping xsi:type="Calculation:AttributeMapping" target="SupplierId_Id" source="SupplierId.Id"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CategoryId_Id" source="CategoryId.Id"/>
+    </input>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Category">
+    <viewAttributes>
+      <viewAttribute id="Id"/>
+      <viewAttribute id="CategoryName"/></viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Categories"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="CN_1" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="Id"/>
+      <viewAttribute id="ProductName"/>
+      <viewAttribute id="SupplierId_Id"/>
+      <viewAttribute id="QuantityPerUnit"/>
+      <viewAttribute id="UnitPrice"/>
+      <viewAttribute id="UnitsInStock"/>
+      <viewAttribute id="UnitsOnOrder"/>
+      <viewAttribute id="ReorderLevel"/>
+      <viewAttribute id="Discontinued"/>
+      <viewAttribute id="CategoryName"/>
+      <viewAttribute hidden="true" id="JOIN$CategoryId_Id$Id"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Product">
+      <mapping xsi:type="Calculation:AttributeMapping" target="Id" source="Id"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ProductName" source="ProductName"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SupplierId_Id" source="SupplierId_Id"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="QuantityPerUnit" source="QuantityPerUnit"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="UnitPrice" source="UnitPrice"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="UnitsInStock" source="UnitsInStock"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="UnitsOnOrder" source="UnitsOnOrder"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ReorderLevel" source="ReorderLevel"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Discontinued" source="Discontinued"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$CategoryId_Id$Id" source="CategoryId_Id"/>
+    </input>
+    <input node="Category">
+      <mapping xsi:type="Calculation:AttributeMapping" target="CategoryName" source="CategoryName"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$CategoryId_Id$Id" source="Id"/>
+    </input>
+    <joinAttribute name="JOIN$CategoryId_Id$Id"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Join_1">
+  <attributes>
+    <attribute id="ProductId" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Id"/>
+      <keyMapping columnObjectName="Join_1" columnName="Id"/>
+    </attribute>
+    <attribute id="ProductName" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ProductName"/>
+      <keyMapping columnObjectName="Join_1" columnName="ProductName"/>
+    </attribute>
+    <attribute id="SupplierId_Id" order="3" displayAttribute="false" attributeHierarchyActive="false" hidden="true">
+      <descriptions defaultDescription="SupplierId_Id"/>
+      <keyMapping columnObjectName="Join_1" columnName="SupplierId_Id"/>
+    </attribute>
+    <attribute id="QuantityPerUnit" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="QuantityPerUnit"/>
+      <keyMapping columnObjectName="Join_1" columnName="QuantityPerUnit"/>
+    </attribute>
+    <attribute id="UnitPrice" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="UnitPrice"/>
+      <keyMapping columnObjectName="Join_1" columnName="UnitPrice"/>
+    </attribute>
+    <attribute id="UnitsInStock" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="UnitsInStock"/>
+      <keyMapping columnObjectName="Join_1" columnName="UnitsInStock"/>
+    </attribute>
+    <attribute id="UnitsOnOrder" order="7" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="UnitsOnOrder"/>
+      <keyMapping columnObjectName="Join_1" columnName="UnitsOnOrder"/>
+    </attribute>
+    <attribute id="ReorderLevel" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ReorderLevel"/>
+      <keyMapping columnObjectName="Join_1" columnName="ReorderLevel"/>
+    </attribute>
+    <attribute id="Discontinued" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Discontinued"/>
+      <keyMapping columnObjectName="Join_1" columnName="Discontinued"/>
+    </attribute>
+    <attribute id="CategoryName" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CategoryName"/>
+      <keyMapping columnObjectName="Join_1" columnName="CategoryName"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="221" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Product" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="376"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="false" modelObjectName="Category" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="302" y="376"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="221" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Product" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="163"/>
+    </shape>
+    <shape modelObjectName="Category" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

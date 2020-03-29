@@ -1,0 +1,27 @@
+{
+    "format_version": 1,
+    "imports": [
+        {
+            "target_table": "Eastwind.Categories",
+            "source_data": {
+                "data_type": "CSV",
+                "file_name": "Categories.csv",
+                "has_header": true,
+                "type_config": {
+				"delimiter": ";"
+			}
+            },
+            "import_settings": {
+                "import_columns": [
+                    "Id",
+					"CategoryName",
+					"Description"
+				
+                ]
+            },
+            "column_mappings":{
+            		"Id" :1,
+					"CategoryName" :2,
+					"Description" :3
+            }
+        }]}

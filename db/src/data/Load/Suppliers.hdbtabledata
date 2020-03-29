@@ -1,0 +1,45 @@
+{
+    "format_version": 1,
+    "imports": [
+        {
+            "target_table": "Eastwind.Suppliers",
+            "source_data": {
+                "data_type": "CSV",
+                "file_name": "Suppliers.csv",
+                "has_header": true,
+                "type_config": {
+				"delimiter": ";"
+			}
+            },
+            "import_settings": {
+                "import_columns": [
+                    "Id",
+					"CompanyName",
+					"ContactName",
+					"ContactTitle",
+					"SuppAddress.Address" ,
+					"SuppAddress.City" ,
+					"SuppAddress.Region",
+					"SuppAddress.PostalCode" ,
+					"SuppAddress.Country" ,
+					"SuppContact.Phone" ,
+					"SuppContact.Fax" ,
+					"HomePage" 
+				
+                ]
+            },
+            "column_mappings":{
+				    "Id":1,
+					"CompanyName":2,
+					"ContactName":3,
+					"ContactTitle":4,
+					"SuppAddress.Address":5 ,
+					"SuppAddress.City":6 ,
+					"SuppAddress.Region":7,
+					"SuppAddress.PostalCode":7 ,
+					"SuppAddress.Country":8 ,
+					"SuppContact.Phone":9 ,
+					"SuppContact.Fax":10 ,
+					"HomePage" :11
+            }
+        }]}

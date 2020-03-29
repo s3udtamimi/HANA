@@ -1,0 +1,16 @@
+{
+	"role":{
+		"name": "ROLEDB_BusinessUser",
+			"schema_privileges": [{
+			
+		   "privileges": ["SELECT METADATA", "SELECT CDS METADATA", "SELECT" ]
+		}] ,
+		   "schema_analytic_privileges":[{
+		   "privileges": ["UserAccess"]
+		   
+		   }]
+	
+	}
+
+
+}

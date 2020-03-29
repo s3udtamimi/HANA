@@ -1,0 +1,8 @@
+{
+  "Categories": {
+    "target": {
+      "object": "Categories",
+      "schema": "PRODUCT"
+    }
+  }
+}

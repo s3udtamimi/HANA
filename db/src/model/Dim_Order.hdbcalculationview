@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" xmlns:Dimension="http://www.sap.com/ndb/BiModelDimension.ecore" id="Dim_Order" applyPrivilegeType="SQL_ANALYTIC_PRIVILEGE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="Dim_Order"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="Eastwind.Orders">
+    <resourceUri>Eastwind.Orders</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews/>
+<inlineHierarchy xsi:type="Dimension:LeveledHierarchy" id="Country_HIE" aggregateAllNodes="true" orphanedNodesHandling="ROOT_NODES" rootNodeVisibility="ADD_ROOT_NODE" withRootNode="true" nodeStyle="LEVEL_NAME_ENFORCED" cacheEnabled="true" cycleHandling="BREAKUP" emptyValueIsNull="true">
+  <descriptions defaultDescription="Country Hierarchies"/>
+  <unassignedMemberProperties mode="FALSE"/>
+  <levels>
+    <level levelAttribute="ShipAddress_Country" levelType="MDLEVEL_TYPE_REGULAR" order="1" orderAttribute="ShipAddress_Country" sortDirection="ASC"/>
+    <level levelAttribute="ShipAddress_Region" levelType="MDLEVEL_TYPE_REGULAR" order="2" orderAttribute="ShipAddress_Region" sortDirection="ASC"/>
+    <level levelAttribute="ShipAddress_City" levelType="MDLEVEL_TYPE_REGULAR" order="3" orderAttribute="ShipAddress_City" sortDirection="ASC"/>
+  </levels>
+</inlineHierarchy>
+<logicalModel id="Eastwind.Orders">
+  <attributes>
+    <attribute id="OrderId" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Id"/>
+      <keyMapping columnObjectName="Eastwind.Orders" columnName="Id"/>
+    </attribute>
+    <attribute id="CustomerId" order="2" displayAttribute="false" attributeHierarchyActive="false" hidden="true">
+      <descriptions defaultDescription="CustomerId"/>
+      <keyMapping columnObjectName="Eastwind.Orders" columnName="CustomerId"/>
+    </attribute>
+    <attribute id="EmployeeId" order="3" displayAttribute="false" attributeHierarchyActive="false" hidden="true">
+      <descriptions defaultDescription="EmployeeId"/>
+      <keyMapping columnObjectName="Eastwind.Orders" columnName="EmployeeId"/>
+    </attribute>
+    <attribute id="OrderDate" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="OrderDate"/>
+      <keyMapping columnObjectName="Eastwind.Orders" columnName="OrderDate"/>
+    </attribute>
+    <attribute id="RequiredDate" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="RequiredDate"/>
+      <keyMapping columnObjectName="Eastwind.Orders" columnName="RequiredDate"/>
+    </attribute>
+    <attribute id="ShippedDate" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ShippedDate"/>
+      <keyMapping columnObjectName="Eastwind.Orders" columnName="ShippedDate"/>
+    </attribute>
+    <attribute id="ShipVia" order="7" displayAttribute="false" attributeHierarchyActive="false" hidden="true">
+      <descriptions defaultDescription="ShipVia"/>
+      <keyMapping columnObjectName="Eastwind.Orders" columnName="ShipVia"/>
+    </attribute>
+    <attribute id="Freight" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Freight"/>
+      <keyMapping columnObjectName="Eastwind.Orders" columnName="Freight"/>
+    </attribute>
+    <attribute id="ShipName" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ShipName"/>
+      <keyMapping columnObjectName="Eastwind.Orders" columnName="ShipName"/>
+    </attribute>
+    <attribute id="ShipAddress_Address" order="10" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ShipAddress_Address"/>
+      <keyMapping columnObjectName="Eastwind.Orders" columnName="ShipAddress.Address"/>
+    </attribute>
+    <attribute id="ShipAddress_City" order="11" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ShipAddress_City"/>
+      <keyMapping columnObjectName="Eastwind.Orders" columnName="ShipAddress.City"/>
+    </attribute>
+    <attribute id="ShipAddress_Region" order="12" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ShipAddress_Region"/>
+      <keyMapping columnObjectName="Eastwind.Orders" columnName="ShipAddress.Region"/>
+    </attribute>
+    <attribute id="ShipAddress_PostalCode" order="13" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ShipAddress_PostalCode"/>
+      <keyMapping columnObjectName="Eastwind.Orders" columnName="ShipAddress.PostalCode"/>
+    </attribute>
+    <attribute id="ShipAddress_Country" order="14" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ShipAddress_Country"/>
+      <keyMapping columnObjectName="Eastwind.Orders" columnName="ShipAddress.Country"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

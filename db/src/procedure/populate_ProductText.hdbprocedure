@@ -1,0 +1,26 @@
+PROCEDURE "populate_ProductText"( )
+   LANGUAGE SQLSCRIPT
+   SQL SECURITY INVOKER
+   --DEFAULT SCHEMA <default_schema_name>
+   AS
+BEGIN
+
+	TRUNCATE TABLE "Product_TEXT";
+	
+	
+	ex_product = SELECT  p."Id" , 'EN' "Language", p."ProductName" "Text" ,'1980-01-01' "ValidFrom",'9999-12-31' "ValidTo"
+					FROM "Eastwind.Product" p;
+	
+	ex_product."ValidTo"[1]='1997-07-24';
+	
+	ex_product."Id"[79] = '1';
+	ex_product."Language"[79] = 'EN';
+	ex_product."Text"[79] = 'Chai_New';
+	ex_product."ValidFrom"[79] = '1997-07-25';
+	ex_product."ValidTo"[79] = '9999-12-31';
+	
+	INSERT INTO "Product_TEXT"
+		SELECT * FROM :ex_product;
+	
+
+END

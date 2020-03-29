@@ -1,0 +1,155 @@
+/*
+This
+*/
+
+context Eastwind {
+    type AddressStruct {
+        Address    : String(60);
+        City       : hana.VARCHAR(20);
+        Region     : String(15);
+        PostalCode : String(10);
+        Country    : String(15);
+    };
+    type ContactStruct {
+        Phone : String(24);
+        Fax   : String(24);
+    };
+
+
+    /*@@layout{"layoutInfo":{"x":681,"y":412}}*/
+    entity Customer {
+        key Id           : Integer generated always as identity(start with 1 increment by 1);
+            CompanyName  : String(40);
+            ContactName  : String(30);
+            ContactTitle : String(30);
+            CustAddress  : AddressStruct;
+            CustContact  : ContactStruct;
+    };
+
+    /*@@layout{"layoutInfo":{}}*/
+    entity Division {
+        key Id           : Integer;
+            DivisionName : String(40);
+    };
+
+    /*@@layout{"layoutInfo":{"external":[{"id":"Division","sourceName":"association_1","x":132.6708984375,"y":-149}]}}*/
+    entity Department {
+        key Id             : Integer;
+            DepartmentName : String(40);
+        key DivisionId     : Integer;
+            toDivision     : association[*, 0..1] to Division on toDivision.Id = DivisionId;
+    }
+    technical configuration {
+        column store;
+/* unique index uni_index on (Id,DivisionId); */
+    };
+
+    entity Categories {
+        key Id           : Integer;
+            CategoryName : String(15);
+            Description  : LargeString;
+    };
+
+    entity Suppliers {
+        key Id           : Integer;
+            CompanyName  : String(40);
+            ContactName  : String(30);
+            ContactTitle : String(30);
+            SuppAddress  : AddressStruct;
+            SuppContact  : ContactStruct;
+            HomePage     : LargeString;
+    };
+
+    /*@@layout{"layoutInfo":{"x":247,"y":-131}}*/
+    entity Product {
+        key Id              : Integer;
+            ProductName     : String(40);
+            SupplierId      : association[*, 1..1] to Suppliers { Id };
+            CategoryId      : association[*, 1..1] to Categories { Id };
+            QuantityPerUnit : String(20);
+            UnitPrice       : Decimal(7, 2);
+            UnitsInStock    : hana.SMALLINT;
+            UnitsOnOrder    : hana.SMALLINT;
+            ReorderLevel    : hana.SMALLINT;
+            Discontinued    : hana.TINYINT;
+    };
+
+    entity Shipper {
+        key Id          : Integer;
+            CompanyName : String(40);
+            Phone       : String(24);
+    };
+
+    entity Employee {
+        key Id              : Integer;
+            LastName        : String(20);
+            FirstName       : String(20);
+            Title           : String(30);
+            TitleOfCourtesy : String(25);
+            Gender          : String(1);
+            BirthDate       : LocalDate;
+            HireDate        : LocalDate;
+            EmpAddress      : AddressStruct;
+            HomePhone       : String(24);
+            Extension       : String(4);
+            ReportsTo       : Integer;
+            CurrentSalary   : Decimal(9, 2);
+            Commission      : Decimal(7, 2);
+            DivisionId      : Integer;
+            DepartmentId    : Integer;
+            toDepartment    : association[*, 0..1] to Department on     toDepartment.Id         = DepartmentId
+                                                                    and toDepartment.DivisionId = DivisionId;
+            toManager       : association[0..1]    to Employee   on ReportsTo = Id;
+    };
+
+    /*@@layout{"layoutInfo":{"x":372,"y":529}}*/
+    entity Orders {
+        key Id           : Integer;
+            CustomerId   : Integer;
+            EmployeeId   : Integer;
+            OrderDate    : UTCTimestamp;
+            RequiredDate : UTCTimestamp;
+            ShippedDate  : UTCTimestamp;
+            ShipVia      : Integer;
+            Freight      : Decimal(9, 2);
+            ShipName     : String(40);
+            ShipAddress  : AddressStruct;
+            toCustomer   : association[*, 1..1] to Customer on toCustomer.Id = CustomerId;
+            toEmployee   : association[*, 1..1] to Employee on toEmployee.Id = EmployeeId;
+            toShipper    : association[*, 1..1] to Shipper  on toShipper.Id = ShipVia;
+    };
+
+    entity OrderDetails {
+        key OrderId   : Integer;
+        key ProductId : Integer;
+            UnitPrice : Decimal(6, 2);
+            Quantity  : hana.SMALLINT;
+            Discount  : hana.REAL;
+            toOrder   : association[*, 1..1] to Orders  on toOrder.Id = OrderId;
+            toProduct : association[*, 1..1] to Product on toProduct.Id = ProductId;
+    };
+
+    entity ConferenceRooms {
+        key RoomId   : Integer;
+            RoomName : String(40);
+            Capacity : Decimal(4, 0);
+    };
+
+    entity Reservations {
+        key ReservationId : Integer;
+            RoomId        : Integer;
+            EmployeeId    : Integer;
+            StartTime     : UTCTimestamp;
+            EndTime       : UTCTimestamp;
+            toRoom        : association[*, 1..1] to ConferenceRooms on toRoom.RoomId = RoomId;
+            toEmployee    : association[*, 1..1] to Employee        on toEmployee.Id = EmployeeId;
+    };
+
+    entity SalaryHistories {
+        key EmployeeId : Integer;
+        key StartDate  : LocalDate;
+            Salary     : Decimal(9, 2);
+            EndDate    : LocalDate;
+            toEmployee : association[*, 0..1] to Employee on toEmployee.Id = EmployeeId;
+    };
+};

@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="Sales_Country_TransperntFilter" applyPrivilegeType="SQL_ANALYTIC_PRIVILEGE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="Sales_Country_Dynamic"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="Eastwind.OrderDetails">
+    <resourceUri>Eastwind.OrderDetails</resourceUri>
+  </DataSource>
+  <DataSource id="Eastwind.Orders">
+    <resourceUri>Eastwind.Orders</resourceUri>
+  </DataSource>
+  <DataSource id="Total_Sales$$$$Eastwind.OrderDetails$$">
+    <resourceUri>Eastwind.OrderDetails</resourceUri>
+  </DataSource>
+  <DataSource id="Total_Sales$$$$Eastwind.Orders$$">
+    <resourceUri>Eastwind.Orders</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:JoinView" id="Sales" cardinality="CN_1" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="OrderId" aggregationType="sum"/>
+      <viewAttribute id="ProductId" aggregationType="sum"/>
+      <viewAttribute id="UnitPrice" aggregationType="sum"/>
+      <viewAttribute id="Quantity" aggregationType="sum"/>
+      <viewAttribute id="Discount" aggregationType="sum"/>
+      <viewAttribute id="OrderDate" aggregationType="min"/>
+      <viewAttribute id="ShipAddress_Country"/>
+      <viewAttribute id="ShipAddress_Region" transparentFilter="true"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="Sales" datatype="DECIMAL" length="6" scale="2" expressionLanguage="COLUMN_ENGINE">
+        <formula>(&quot;UnitPrice&quot; * &quot;Quantity&quot;) - &quot;Discount&quot;</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="Eastwind.OrderDetails">
+      <mapping xsi:type="Calculation:AttributeMapping" target="OrderId" source="OrderId"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ProductId" source="ProductId"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="UnitPrice" source="UnitPrice"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Quantity" source="Quantity"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Discount" source="Discount"/>
+    </input>
+    <input node="Eastwind.Orders">
+      <mapping xsi:type="Calculation:AttributeMapping" target="OrderDate" source="OrderDate"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ShipAddress_Country" source="ShipAddress.Country"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ShipAddress_Region" source="ShipAddress.Region"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OrderId" source="Id"/>
+    </input>
+    <joinAttribute name="OrderId"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Total_Sales" cardinality="CN_1" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="UnitPrice" aggregationType="sum"/>
+      <viewAttribute id="Quantity" aggregationType="sum"/>
+      <viewAttribute id="Discount" aggregationType="sum"/>
+      <viewAttribute id="ShipAddress_Country"/>
+      <viewAttribute id="ShipAddress_Region"/>
+      <viewAttribute hidden="true" id="JOIN$OrderId$Id"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="Total_Sales" datatype="DECIMAL" length="6" scale="2" expressionLanguage="COLUMN_ENGINE">
+        <formula>(&quot;UnitPrice&quot; * &quot;Quantity&quot;) - &quot;Discount&quot;</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input emptyUnionBehavior="undefined" node="Total_Sales$$$$Eastwind.OrderDetails$$">
+      <mapping xsi:type="Calculation:AttributeMapping" target="UnitPrice" source="UnitPrice"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Quantity" source="Quantity"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Discount" source="Discount"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$OrderId$Id" source="OrderId"/>
+    </input>
+    <input emptyUnionBehavior="undefined" node="Total_Sales$$$$Eastwind.Orders$$">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ShipAddress_Country" source="ShipAddress.Country"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ShipAddress_Region" source="ShipAddress.Region"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$OrderId$Id" source="Id"/>
+    </input>
+    <joinAttribute name="JOIN$OrderId$Id"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_1">
+    <viewAttributes>
+      <viewAttribute id="Total_Sales" aggregationType="sum"/>
+      <viewAttribute id="ShipAddress_Country"/>
+      <viewAttribute id="ShipAddress_Region"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="Total_Sales"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="CN_1" dynamic="true" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="Sales" aggregationType="sum"/>
+      <viewAttribute id="Total_Sales" aggregationType="sum"/>
+    
+      <viewAttribute id="OrderId" aggregationType="sum"/>
+      <viewAttribute id="ProductId" aggregationType="sum"/>
+      <viewAttribute id="UnitPrice" aggregationType="sum"/>
+      <viewAttribute id="Quantity" aggregationType="sum"/>
+      <viewAttribute id="Discount" aggregationType="sum"/>
+      <viewAttribute id="OrderDate" aggregationType="min"/>
+      <viewAttribute id="ShipAddress_Country"/>
+      <viewAttribute id="ShipAddress_Region" transparentFilter="true"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Aggregation_2">
+      <mapping xsi:type="Calculation:AttributeMapping" target="Sales" source="Sales"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OrderId" source="OrderId"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ProductId" source="ProductId"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="UnitPrice" source="UnitPrice"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Quantity" source="Quantity"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Discount" source="Discount"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OrderDate" source="OrderDate"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ShipAddress_Country" source="ShipAddress_Country"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ShipAddress_Region" source="ShipAddress_Region"/>
+    </input>
+    <input node="Aggregation_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="Total_Sales" source="Total_Sales"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ShipAddress_Country" source="ShipAddress_Country"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ShipAddress_Region" source="ShipAddress_Region"/>
+    </input>
+    <joinAttribute name="ShipAddress_Country"/>
+    <joinAttribute name="ShipAddress_Region"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:AggregationView" id="Aggregation_2">
+    <viewAttributes>
+      <viewAttribute id="Sales" aggregationType="sum"/>
+      <viewAttribute id="OrderId"/>
+      <viewAttribute id="ProductId"/>
+      <viewAttribute id="UnitPrice" aggregationType="sum"/>
+      <viewAttribute id="Quantity" aggregationType="sum"/>
+      <viewAttribute id="Discount" aggregationType="sum"/>
+      <viewAttribute id="OrderDate"/>
+      <viewAttribute id="ShipAddress_Country"/>
+      <viewAttribute id="ShipAddress_Region" transparentFilter="true"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <restrictedViewAttributes/>
+    <input node="Sales"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Join_1">
+  <attributes>
+    <attribute id="OrderId" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="OrderId"/>
+      <keyMapping columnObjectName="Join_1" columnName="OrderId"/>
+    </attribute>
+    <attribute id="ProductId" order="4" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ProductId"/>
+      <keyMapping columnObjectName="Join_1" columnName="ProductId"/>
+    </attribute>
+    <attribute id="OrderDate" order="8" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="OrderDate"/>
+      <keyMapping columnObjectName="Join_1" columnName="OrderDate"/>
+    </attribute>
+    <attribute id="ShipAddress_Country" order="9" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ShipAddress_Country"/>
+      <keyMapping columnObjectName="Join_1" columnName="ShipAddress_Country"/>
+    </attribute>
+    <attribute id="ShipAddress_Region" order="10" displayAttribute="false" attributeHierarchyActive="false" transparentFilter="true">
+      <descriptions defaultDescription="ShipAddress_Region"/>
+      <keyMapping columnObjectName="Join_1" columnName="ShipAddress_Region"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="Sales" order="1" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Sales"/>
+      <measureMapping columnObjectName="Join_1" columnName="Sales"/>
+    </measure>
+    <measure id="Total_Sales" order="2" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Total_Sales"/>
+      <measureMapping columnObjectName="Join_1" columnName="Total_Sales"/>
+    </measure>
+  
+    <measure id="UnitPrice" order="5" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="UnitPrice"/>
+      <measureMapping columnObjectName="Join_1" columnName="UnitPrice"/>
+    </measure>
+    <measure id="Quantity" order="6" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Quantity"/>
+      <measureMapping columnObjectName="Join_1" columnName="Quantity"/>
+    </measure>
+    <measure id="Discount" order="7" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Discount"/>
+      <measureMapping columnObjectName="Join_1" columnName="Discount"/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="239" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Sales" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="501"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Eastwind.OrderDetails" modelObjectNameSpace="Sales" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="192"/>
+    </shape>
+    <shape modelObjectName="Eastwind.Orders" modelObjectNameSpace="Sales" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="208"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Total_Sales" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="302" y="501"/>
+      <rectangleSize width="160"/>
+    </shape>
+    <shape modelObjectName="Eastwind.OrderDetails" modelObjectNameSpace="Total_Sales" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="Eastwind.Orders" modelObjectNameSpace="Total_Sales" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Aggregation_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="308" y="376"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="239" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Aggregation_2" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="193"/>
+    </shape>
+    <shape modelObjectName="Aggregation_1" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Aggregation_2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="376"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

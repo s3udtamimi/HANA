@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Privilege:analyticPrivilege xmlns:Privilege="http://www.sap.com/ndb/BiModelPrivilege.ecore" id="UserAccess" privilegeType="SQL_ANALYTIC_PRIVILEGE" schemaVersion="1.1">
+<descriptions defaultDescription="UserAccess"/>
+<securedModels>
+  <modelUri>Buid_Sales_Fact</modelUri>
+  <modelUri>Dim_Categories</modelUri>
+  <modelUri>Dim_Customer</modelUri>
+  <modelUri>Dim_Department</modelUri>
+  <modelUri>Dim_Employee</modelUri>
+  <modelUri>Dim_Order</modelUri>
+  <modelUri>Dim_Product</modelUri>
+  <modelUri>Dim_Shipper</modelUri>
+  <modelUri>Dim_Suppliers</modelUri>
+  <modelUri>Dim_Time</modelUri>
+  <modelUri>Product_Text</modelUri>
+  <modelUri>Sales_Country_TransperntFilter</modelUri>
+  <modelUri>Sales_Dynamic_Join</modelUri>
+  <modelUri>Sales_Fact</modelUri></securedModels>
+</Privilege:analyticPrivilege>

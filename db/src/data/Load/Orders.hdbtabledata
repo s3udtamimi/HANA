@@ -1,0 +1,49 @@
+{
+    "format_version": 1,
+    "imports": [
+        {
+            "target_table": "Eastwind.Orders",
+            "source_data": {
+                "data_type": "CSV",
+                "file_name": "Orders.csv",
+                "has_header": true,
+                "type_config": {
+				"delimiter": ";"
+			}
+            },
+            "import_settings": {
+                "import_columns": [
+                    "Id",
+					"CustomerId",
+					"EmployeeId",
+					"OrderDate",
+					"RequiredDate",
+					"ShippedDate",
+					"ShipVia",
+					"Freight",
+					"ShipName",
+					"ShipAddress.Address",
+					"ShipAddress.City",
+					"ShipAddress.Region",
+					"ShipAddress.PostalCode",
+					"ShipAddress.Country"
+				
+                ]
+            },
+            "column_mappings":{
+                    "Id":1,
+					"CustomerId":2,
+					"EmployeeId":3,
+					"OrderDate":4,
+					"RequiredDate":5,
+					"ShippedDate":6,
+					"ShipVia":7,
+					"Freight":8,
+					"ShipName":9,
+					"ShipAddress.Address":10,
+					"ShipAddress.City":11,
+					"ShipAddress.Region":12,
+					"ShipAddress.PostalCode":13,
+					"ShipAddress.Country":14
+            }
+        }]}

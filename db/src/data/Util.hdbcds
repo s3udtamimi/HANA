@@ -1,0 +1,10 @@
+Using Eastwind as e;
+
+entity Product_TEXT{
+	key ProductId : Integer;
+	Key Language : String(2);
+	Text : String (60);
+	Key ValidFrom : LocalDate;
+	ValidTo : LocalDate;
+	toProduct : association[*, 1..1] to e.Product on toProduct.Id = ProductId;
+}

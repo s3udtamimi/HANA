@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="Sales_Fact" applyPrivilegeType="SQL_ANALYTIC_PRIVILEGE" dataCategory="CUBE" schemaVersion="3.0" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="Sales Fact"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="Buid_Sales_Fact">
+    <resourceUri>Buid_Sales_Fact</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Sales">
+    <viewAttributes>
+      <viewAttribute id="OrderId_"/>
+      <viewAttribute id="ProductId_"/>
+      <viewAttribute id="CustomerId_"/>
+      <viewAttribute id="EmployeeId_"/>
+      <viewAttribute id="ShipperId_"/>
+      <viewAttribute id="SupplierId_"/>
+      <viewAttribute id="UnitPrice"/>
+      <viewAttribute id="Quantity"/>
+      <viewAttribute id="Discount"/>
+      <viewAttribute id="OrderDate"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Buid_Sales_Fact">
+      <mapping xsi:type="Calculation:AttributeMapping" target="OrderId_" source="OrderId"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ProductId_" source="ProductId"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CustomerId_" source="CustomerId"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="EmployeeId_" source="EmployeeId"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ShipperId_" source="ShipVia"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="SupplierId_" source="SupplierId_Id"/>
+    </input>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Sales">
+  <attributes>
+    <attribute id="CustomerId_$local">
+      <keyMapping columnObjectName="Sales" columnName="CustomerId_"/>
+    </attribute>
+    <attribute id="EmployeeId_$local">
+      <keyMapping columnObjectName="Sales" columnName="EmployeeId_"/>
+    </attribute>
+    <attribute id="OrderId_$local">
+      <keyMapping columnObjectName="Sales" columnName="OrderId_"/>
+    </attribute>
+    <attribute id="ProductId_$local">
+      <keyMapping columnObjectName="Sales" columnName="ProductId_"/>
+    </attribute>
+    <attribute id="ShipperId_$local">
+      <keyMapping columnObjectName="Sales" columnName="ShipperId_"/>
+    </attribute>
+    <attribute id="SupplierId_$local">
+      <keyMapping columnObjectName="Sales" columnName="SupplierId_"/>
+    </attribute>
+    <attribute id="OrderDate$local">
+      <descriptions defaultDescription="OrderDate"/>
+      <keyMapping columnObjectName="Sales" columnName="OrderDate"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="UnitPrice_1" order="2" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="UnitPrice_1"/>
+      <measureMapping columnObjectName="Sales" columnName="UnitPrice"/>
+    </measure>
+    <measure id="Quantity" order="3" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Quantity"/>
+      <measureMapping columnObjectName="Sales" columnName="Quantity"/>
+    </measure>
+    <measure id="Discount" order="4" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Discount"/>
+      <measureMapping columnObjectName="Sales" columnName="Discount"/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures>
+    <measure id="Total_Revenue" order="1" aggregationType="sum" measureType="simple" datatype="DECIMAL" length="6" scale="2" expressionLanguage="COLUMN_ENGINE">
+      <descriptions defaultDescription="Total revenue"/>
+      <formula>(&quot;UnitPrice_1&quot;*&quot;Quantity&quot;) - &quot;Discount&quot;</formula>
+      
+      
+      </measure>
+  </calculatedMeasures>
+  <restrictedMeasures/>
+  <localDimensions/>
+  <sharedDimensions>
+    <logicalJoin associatedObjectUri="Dim_Customer">
+      <attributes>
+        <attributeRef>CustomerId_$local</attributeRef>
+      </attributes>
+      <associatedAttributeNames>
+        <attributeName>CustomerId</attributeName>
+      </associatedAttributeNames>
+      <properties cardinality="CN_1" joinType="leftOuter" joinOperator="Equal"/>
+      <associatedAttributeFeatures>
+        <attributeReference attributeName="CustomerId" hidden="true"/>
+      </associatedAttributeFeatures>
+    </logicalJoin>
+    <logicalJoin associatedObjectUri="Dim_Employee">
+      <attributes>
+        <attributeRef>EmployeeId_$local</attributeRef>
+      </attributes>
+      <associatedAttributeNames>
+        <attributeName>EmployeeId</attributeName>
+      </associatedAttributeNames>
+      <properties cardinality="CN_1" joinType="leftOuter" joinOperator="Equal"/>
+      <associatedAttributeFeatures>
+        <attributeReference attributeName="EmployeeId" hidden="true"/>
+      </associatedAttributeFeatures>
+    </logicalJoin>
+    <logicalJoin associatedObjectUri="Dim_Order">
+      <attributes>
+        <attributeRef>OrderId_$local</attributeRef>
+      </attributes>
+      <associatedAttributeNames>
+        <attributeName>OrderId</attributeName>
+      </associatedAttributeNames>
+      <properties cardinality="CN_1" joinType="leftOuter" joinOperator="Equal"/>
+      <associatedAttributeFeatures/>
+    </logicalJoin>
+    <logicalJoin associatedObjectUri="Dim_Product">
+      <attributes>
+        <attributeRef>ProductId_$local</attributeRef>
+      </attributes>
+      <associatedAttributeNames>
+        <attributeName>ProductId</attributeName>
+      </associatedAttributeNames>
+      <properties cardinality="CN_1" joinType="leftOuter" joinOperator="Equal"/>
+      <associatedAttributeFeatures>
+        <attributeReference attributeName="UnitPrice" hidden="true"/>
+      </associatedAttributeFeatures>
+    </logicalJoin>
+    <logicalJoin associatedObjectUri="Dim_Shipper">
+      <attributes>
+        <attributeRef>ShipperId_$local</attributeRef>
+      </attributes>
+      <associatedAttributeNames>
+        <attributeName>ShipperId</attributeName>
+      </associatedAttributeNames>
+      <properties cardinality="CN_1" joinType="leftOuter" joinOperator="Equal"/>
+      <associatedAttributeFeatures/>
+    </logicalJoin>
+    <logicalJoin associatedObjectUri="Dim_Suppliers">
+      <attributes>
+        <attributeRef>SupplierId_$local</attributeRef>
+      </attributes>
+      <associatedAttributeNames>
+        <attributeName>SupplierId</attributeName>
+      </associatedAttributeNames>
+      <properties cardinality="CN_1" joinType="leftOuter" joinOperator="Equal"/>
+      <associatedAttributeFeatures/>
+    </logicalJoin>
+    <logicalJoin associatedObjectUri="Dim_Time">
+      <attributes>
+        <attributeRef>OrderDate$local</attributeRef>
+      </attributes>
+      <associatedAttributeNames>
+        <attributeName>DATE_SQL</attributeName>
+      </associatedAttributeNames>
+      <properties cardinality="CN_1" joinType="leftOuter" joinOperator="Equal"/>
+      <associatedAttributeFeatures/>
+    </logicalJoin>
+  </sharedDimensions>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="92" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Sales" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="322"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Sales" modelObjectNameSpace="StarJoinViewNodeInput" modelObjectType="repository">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+    <shape modelObjectName="Dim_Customer" modelObjectNameSpace="StarJoinViewNodeSharedCV" modelObjectType="repository">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="211"/>
+    </shape>
+    <shape modelObjectName="Dim_Employee" modelObjectNameSpace="StarJoinViewNodeSharedCV" modelObjectType="repository">
+      <upperLeftCorner x="620" y="30"/>
+      <rectangleSize width="211"/>
+    </shape>
+    <shape modelObjectName="Dim_Order" modelObjectNameSpace="StarJoinViewNodeSharedCV" modelObjectType="repository">
+      <upperLeftCorner x="920" y="30"/>
+      <rectangleSize width="211"/>
+    </shape>
+    <shape modelObjectName="Dim_Product" modelObjectNameSpace="StarJoinViewNodeSharedCV" modelObjectType="repository">
+      <upperLeftCorner x="1220" y="30"/>
+      <rectangleSize width="163"/>
+    </shape>
+    <shape modelObjectName="Dim_Shipper" modelObjectNameSpace="StarJoinViewNodeSharedCV" modelObjectType="repository">
+      <upperLeftCorner x="772" y="112"/>
+      <rectangleSize width="162"/>
+    </shape>
+    <shape modelObjectName="Dim_Suppliers" modelObjectNameSpace="StarJoinViewNodeSharedCV" modelObjectType="repository">
+      <upperLeftCorner x="247" y="46"/>
+      <rectangleSize width="215"/>
+    </shape>
+    <shape modelObjectName="Dim_Time" modelObjectNameSpace="StarJoinViewNodeSharedCV" modelObjectType="repository">
+      <upperLeftCorner x="888" y="145"/>
+      <rectangleSize width="191"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

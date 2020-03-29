@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="Dim_Department" applyPrivilegeType="SQL_ANALYTIC_PRIVILEGE" dataCategory="DIMENSION" dimensionType="STANDARD" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="Dim_Department"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="Eastwind.Department">
+    <resourceUri>Eastwind.Department</resourceUri>
+  </DataSource>
+  <DataSource id="Eastwind.Division">
+    <resourceUri>Eastwind.Division</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Department">
+    <viewAttributes>
+      <viewAttribute id="Id"/>
+      <viewAttribute id="DepartmentName"/>
+      <viewAttribute id="DivisionId"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Eastwind.Department"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Division">
+    <viewAttributes>
+      <viewAttribute id="Id"/>
+      <viewAttribute id="DivisionName"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Eastwind.Division"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="CN_1" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="Id"/>
+      <viewAttribute id="DepartmentName"/>
+      <viewAttribute id="DivisionName"/>
+      <viewAttribute hidden="true" id="JOIN$DivisionId$Id"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Department">
+      <mapping xsi:type="Calculation:AttributeMapping" target="Id" source="Id"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="DepartmentName" source="DepartmentName"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DivisionId$Id" source="DivisionId"/>
+    </input>
+    <input node="Division">
+      <mapping xsi:type="Calculation:AttributeMapping" target="DivisionName" source="DivisionName"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="JOIN$DivisionId$Id" source="Id"/>
+    </input>
+    <joinAttribute name="JOIN$DivisionId$Id"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Join_1">
+  <attributes>
+    <attribute id="Id" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Id"/>
+      <keyMapping columnObjectName="Join_1" columnName="Id"/>
+    </attribute>
+    <attribute id="DepartmentName" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DepartmentName"/>
+      <keyMapping columnObjectName="Join_1" columnName="DepartmentName"/>
+    </attribute>
+    <attribute id="DivisionName" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="DivisionName"/>
+      <keyMapping columnObjectName="Join_1" columnName="DivisionName"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="221" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="false" modelObjectName="Department" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="87" y="337"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Division" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="302" y="356"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="221" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Department" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="130"/>
+    </shape>
+    <shape modelObjectName="Division" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="110"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>
