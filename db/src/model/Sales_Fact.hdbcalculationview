@@ -22,7 +22,11 @@
       <viewAttribute id="Discount"/>
       <viewAttribute id="OrderDate"/>
     </viewAttributes>
-    <calculatedViewAttributes/>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="Total_Revenue" datatype="DECIMAL" length="6" scale="2" expressionLanguage="COLUMN_ENGINE">
+        <formula>(&quot;UnitPrice&quot;*&quot;Quantity&quot;) - &quot;Discount&quot;</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
     <input node="Buid_Sales_Fact">
       <mapping xsi:type="Calculation:AttributeMapping" target="OrderId_" source="OrderId"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="ProductId_" source="ProductId"/>
@@ -60,27 +64,25 @@
   </attributes>
   <calculatedAttributes/>
   <baseMeasures>
-    <measure id="UnitPrice_1" order="2" aggregationType="sum" measureType="simple">
+    <measure id="UnitPrice_1" order="1" aggregationType="sum" measureType="simple" displayFolder="KPI">
       <descriptions defaultDescription="UnitPrice_1"/>
       <measureMapping columnObjectName="Sales" columnName="UnitPrice"/>
     </measure>
-    <measure id="Quantity" order="3" aggregationType="sum" measureType="simple">
+    <measure id="Quantity" order="2" aggregationType="sum" measureType="simple" displayFolder="KPI">
       <descriptions defaultDescription="Quantity"/>
       <measureMapping columnObjectName="Sales" columnName="Quantity"/>
     </measure>
-    <measure id="Discount" order="4" aggregationType="sum" measureType="simple">
+    <measure id="Discount" order="3" aggregationType="sum" measureType="simple" displayFolder="KPI">
       <descriptions defaultDescription="Discount"/>
       <measureMapping columnObjectName="Sales" columnName="Discount"/>
     </measure>
+  
+    <measure id="Total_Revenue" order="4" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Total_Revenue"/>
+      <measureMapping columnObjectName="Sales" columnName="Total_Revenue"/>
+    </measure>
   </baseMeasures>
-  <calculatedMeasures>
-    <measure id="Total_Revenue" order="1" aggregationType="sum" measureType="simple" datatype="DECIMAL" length="6" scale="2" expressionLanguage="COLUMN_ENGINE">
-      <descriptions defaultDescription="Total revenue"/>
-      <formula>(&quot;UnitPrice_1&quot;*&quot;Quantity&quot;) - &quot;Discount&quot;</formula>
-      
-      
-      </measure>
-  </calculatedMeasures>
+  <calculatedMeasures/>
   <restrictedMeasures/>
   <localDimensions/>
   <sharedDimensions>
@@ -104,9 +106,7 @@
         <attributeName>EmployeeId</attributeName>
       </associatedAttributeNames>
       <properties cardinality="CN_1" joinType="leftOuter" joinOperator="Equal"/>
-      <associatedAttributeFeatures>
-        <attributeReference attributeName="EmployeeId" hidden="true"/>
-      </associatedAttributeFeatures>
+      <associatedAttributeFeatures/>
     </logicalJoin>
     <logicalJoin associatedObjectUri="Dim_Order">
       <attributes>

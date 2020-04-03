@@ -16,6 +16,9 @@
   <DataSource id="Product_TEXT">
     <resourceUri>Product_TEXT</resourceUri>
   </DataSource>
+  <DataSource id="Join_2$$$$Product_TEXT$$">
+    <resourceUri>Product_TEXT</resourceUri>
+  </DataSource>
 </dataSources>
 <calculationViews>
   <calculationView xsi:type="Calculation:ProjectionView" id="Sale">
@@ -86,10 +89,10 @@
       <viewAttribute id="OrderID"/>
       <viewAttribute id="OrderDate"/>
       <viewAttribute id="Id"/>
-      <viewAttribute id="Language"/>
-      <viewAttribute id="Text"/>
       <viewAttribute id="ValidFrom"/>
       <viewAttribute id="ValidTo"/>
+    
+      <viewAttribute id="Text_Non"/>
     </viewAttributes>
     <calculatedViewAttributes/>
     <input node="Projection_1">
@@ -98,14 +101,45 @@
       <mapping xsi:type="Calculation:AttributeMapping" target="Id" source="Id"/>
     </input>
     <input node="Text">
-      <mapping xsi:type="Calculation:AttributeMapping" target="Language" source="Language"/>
-      <mapping xsi:type="Calculation:AttributeMapping" target="Text" source="Text"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="ValidFrom" source="ValidFrom"/>
       <mapping xsi:type="Calculation:AttributeMapping" target="ValidTo" source="ValidTo"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="Text_Non" source="Text"/>
     </input>
     <joinAttribute leftColumn="Id" rightColumn="ProductId" operator="EQ"/>
     <joinAttribute leftColumn="OrderDate" rightColumn="ValidFrom" operator="GE"/>
     <joinAttribute leftColumn="OrderDate" rightColumn="ValidTo" operator="LE"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_2" joinType="textTable" languageColumn="Language">
+    <viewAttributes>
+      <viewAttribute id="OrderID"/>
+      <viewAttribute id="OrderDate"/>
+      <viewAttribute id="Id"/>
+      <viewAttribute id="ValidFrom"/>
+      <viewAttribute id="ValidTo"/>
+      <viewAttribute id="Text"/>
+    
+      <viewAttribute id="Text_Non"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="NonEquiJoin_1">
+      <mapping xsi:type="Calculation:AttributeMapping" target="OrderID" source="OrderID"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="OrderDate" source="OrderDate"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Id" source="Id"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ValidFrom" source="ValidFrom"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ValidTo" source="ValidTo"/>
+    
+      <mapping xsi:type="Calculation:AttributeMapping" target="Text_Non" source="Text_Non"/>
+    </input>
+    <input node="Join_2$$$$Product_TEXT$$">
+      <mapping xsi:type="Calculation:AttributeMapping" target="Text" source="Text"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="Id" source="ProductId"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ValidTo" source="ValidTo"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ValidFrom" source="ValidFrom"/>
+    </input>
+    <joinAttribute name="Id"/>
+    <joinAttribute name="ValidTo"/>
+    <joinAttribute name="ValidFrom"/>
   </calculationView>
   <calculationView xsi:type="Calculation:JoinView" id="Join_1_1" cardinality="C1_N" joinType="inner" multiJoinNode="Join_1" multiJoinCentralTable="Sale" multiJoinOrder="Outside In">
     <viewAttributes>
@@ -174,35 +208,34 @@
     <joinAttribute name="JOIN$OrderId$Id"/>
   </calculationView>
 </calculationViews>
-<logicalModel id="NonEquiJoin_1">
+<logicalModel id="Join_2">
   <attributes>
     <attribute id="OrderID" order="1" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="OrderID"/>
-      <keyMapping columnObjectName="NonEquiJoin_1" columnName="OrderID"/>
+      <keyMapping columnObjectName="Join_2" columnName="OrderID"/>
     </attribute>
     <attribute id="OrderDate" order="2" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="OrderDate"/>
-      <keyMapping columnObjectName="NonEquiJoin_1" columnName="OrderDate"/>
+      <keyMapping columnObjectName="Join_2" columnName="OrderDate"/>
     </attribute>
     <attribute id="Id" order="3" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="Id"/>
-      <keyMapping columnObjectName="NonEquiJoin_1" columnName="Id"/>
+      <keyMapping columnObjectName="Join_2" columnName="Id"/>
     </attribute>
-    <attribute id="Language" order="4" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="Language"/>
-      <keyMapping columnObjectName="NonEquiJoin_1" columnName="Language"/>
-    </attribute>
-    <attribute id="Text" order="5" displayAttribute="false" attributeHierarchyActive="false">
-      <descriptions defaultDescription="Text"/>
-      <keyMapping columnObjectName="NonEquiJoin_1" columnName="Text"/>
-    </attribute>
-    <attribute id="ValidFrom" order="6" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="ValidFrom" order="4" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ValidFrom"/>
-      <keyMapping columnObjectName="NonEquiJoin_1" columnName="ValidFrom"/>
+      <keyMapping columnObjectName="Join_2" columnName="ValidFrom"/>
     </attribute>
-    <attribute id="ValidTo" order="7" displayAttribute="false" attributeHierarchyActive="false">
+    <attribute id="ValidTo" order="5" displayAttribute="false" attributeHierarchyActive="false">
       <descriptions defaultDescription="ValidTo"/>
-      <keyMapping columnObjectName="NonEquiJoin_1" columnName="ValidTo"/>
+      <keyMapping columnObjectName="Join_2" columnName="ValidTo"/>
+    </attribute>
+  
+    <attribute id="Text" order="6" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Text"/>
+  
+      <keyMapping columnObjectName="Join_2" columnName="Text"/>
+  
     </attribute>
   </attributes>
   <calculatedAttributes/>
@@ -213,33 +246,33 @@
 <layout>
   <shapes>
     <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
-      <upperLeftCorner x="424" y="112"/>
+      <upperLeftCorner x="443" y="112"/>
     
       <rectangleSize width="160"/>
     </shape>
   
     <shape expanded="true" modelObjectName="Sale" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="92" y="636"/>
+      <upperLeftCorner x="91" y="796"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Order" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="302" y="636"/>
+      <upperLeftCorner x="302" y="796"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Product" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="512" y="636"/>
+      <upperLeftCorner x="511" y="796"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Text" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="502" y="356"/>
+      <upperLeftCorner x="509" y="516"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="292" y="356"/>
+      <upperLeftCorner x="299" y="516"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape expanded="true" modelObjectName="NonEquiJoin_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="424" y="217"/>
+      <upperLeftCorner x="416" y="356"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Projection_1" modelObjectNameSpace="NonEquiJoin_1" modelObjectType="JoinNodeInput">
@@ -250,10 +283,23 @@
       <upperLeftCorner x="320" y="30"/>
       <rectangleSize width="135"/>
     </shape>
+    <shape expanded="true" modelObjectName="Join_2" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="443" y="217"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="NonEquiJoin_1" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="151"/>
+    </shape>
+    <shape modelObjectName="Product_TEXT" modelObjectNameSpace="Join_2" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="320" y="30"/>
+      <rectangleSize width="250"/>
+    </shape>
+  
   <shape><upperLeftCorner/><rectangleSize/></shape><shape><upperLeftCorner/><rectangleSize/></shape><shape><upperLeftCorner/><rectangleSize/></shape><shape><upperLeftCorner/><rectangleSize/></shape>
   
     <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
-      <upperLeftCorner x="302" y="481"/>
+      <upperLeftCorner x="302" y="641"/>
       <rectangleSize height="30" width="160"/>
     </shape>
     <shape modelObjectName="Sale" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput" multiJoinViewNodeName="Join_1">

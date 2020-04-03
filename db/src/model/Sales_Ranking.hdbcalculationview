@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="Sales_Ranking" applyPrivilegeType="NONE" dataCategory="CUBE" schemaVersion="3.0" outputViewType="Aggregation" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="Sales_Ranking"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="Dim_Product">
+    <resourceUri>Dim_Product</resourceUri>
+  </DataSource>
+  <DataSource id="Eastwind.OrderDetails">
+    <resourceUri>Eastwind.OrderDetails</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Product">
+    <viewAttributes>
+      <viewAttribute id="ProductId"/>
+      <viewAttribute id="ProductName"/>
+      <viewAttribute id="QuantityPerUnit"/>
+      <viewAttribute id="UnitPrice"/>
+      <viewAttribute id="UnitsInStock"/>
+      <viewAttribute id="UnitsOnOrder"/>
+      <viewAttribute id="ReorderLevel"/>
+      <viewAttribute id="Discontinued"/>
+      <viewAttribute id="CategoryName"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Dim_Product"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Sales">
+    <viewAttributes>
+      <viewAttribute id="OrderId"/>
+      <viewAttribute id="ProductId"/>
+      <viewAttribute id="UnitPrice"/>
+      <viewAttribute id="Quantity"/>
+      <viewAttribute id="Discount"/>
+    </viewAttributes>
+    <calculatedViewAttributes>
+      <calculatedViewAttribute id="Sales" datatype="DECIMAL" length="6" scale="2" expressionLanguage="COLUMN_ENGINE">
+        <formula>(&quot;UnitPrice&quot; * &quot;Quantity&quot;) - &quot;Discount&quot;</formula>
+      </calculatedViewAttribute>
+    </calculatedViewAttributes>
+    <input node="Eastwind.OrderDetails"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:JoinView" id="Join_1" cardinality="CN_N" joinType="inner">
+    <viewAttributes>
+      <viewAttribute id="ProductId" aggregationType="sum"/>
+      <viewAttribute id="ProductName"/>
+      <viewAttribute id="CategoryName"/>
+      <viewAttribute id="Sales" aggregationType="sum"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Product">
+      <mapping xsi:type="Calculation:AttributeMapping" target="ProductId" source="ProductId"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ProductName" source="ProductName"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="CategoryName" source="CategoryName"/>
+    </input>
+    <input node="Sales">
+      <mapping xsi:type="Calculation:AttributeMapping" target="Sales" source="Sales"/>
+      <mapping xsi:type="Calculation:AttributeMapping" target="ProductId" source="ProductId"/>
+    </input>
+    <joinAttribute name="ProductId"/>
+  </calculationView>
+  <calculationView xsi:type="Calculation:RankView" id="Rank_1">
+    <viewAttributes>
+      <viewAttribute id="Sales" aggregationType="sum"/>
+      <viewAttribute id="ProductId" aggregationType="sum"/>
+      <viewAttribute id="ProductName"/>
+      <viewAttribute id="CategoryName"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="Join_1"/>
+    <rankingFilter type="RANK" offset="0" offsetReference="FRONT" dynamicPartitionAttributes="false">
+      <order byViewAttributeName="ProductId" direction="ASC"/>
+      <rankThreshold>
+        <value>100000</value>
+      </rankThreshold>
+      <rankViewAttributeName>Rank_Column</rankViewAttributeName>
+    </rankingFilter>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Rank_1">
+  <attributes>
+    <attribute id="ProductId" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ProductId"/>
+      <keyMapping columnObjectName="Rank_1" columnName="ProductId"/>
+    </attribute>
+    <attribute id="ProductName" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="ProductName"/>
+      <keyMapping columnObjectName="Rank_1" columnName="ProductName"/>
+    </attribute>
+    <attribute id="CategoryName" order="3" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="CategoryName"/>
+      <keyMapping columnObjectName="Rank_1" columnName="CategoryName"/>
+    </attribute>
+    <attribute id="Rank_Column" order="5" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="Rank_Column"/>
+      <keyMapping columnObjectName="Rank_1" columnName="Rank_Column"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures>
+    <measure id="Sales" order="4" aggregationType="sum" measureType="simple">
+      <descriptions defaultDescription="Sales"/>
+      <measureMapping columnObjectName="Rank_1" columnName="Sales"/>
+    </measure>
+  </baseMeasures>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+  <localDimensions/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="221" y="112"/>
+    
+      <rectangleSize width="160"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Product" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="302" y="501"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Sales" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="92" y="606"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape expanded="true" modelObjectName="Join_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="216" y="341"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+    <shape modelObjectName="Product" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="20" y="30"/>
+      <rectangleSize width="109"/>
+    </shape>
+    <shape modelObjectName="Sales" modelObjectNameSpace="Join_1" modelObjectType="JoinNodeInput">
+      <upperLeftCorner x="620" y="30"/>
+      <rectangleSize width="133"/>
+    </shape>
+    <shape expanded="false" modelObjectName="Rank_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="216" y="236"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

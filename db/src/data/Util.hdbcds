@@ -2,7 +2,7 @@ Using Eastwind as e;
 
 entity Product_TEXT{
 	key ProductId : Integer;
-	Key Language : String(2);
+	Key Language : String(1);
 	Text : String (60);
 	Key ValidFrom : LocalDate;
 	ValidTo : LocalDate;

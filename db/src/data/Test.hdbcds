@@ -1,0 +1,21 @@
+context Test {
+    entity Header {
+        key PurchaseId : Integer;
+        	POName : String(20);
+    }
+
+    /*@@layout{"layoutInfo":{"external":[{"id":"Header","sourceName":"POHeader","x":176.6484375,"y":-24}]}}*/
+    entity Item {
+        key ItemId   : Integer;
+            POHeader : Integer;
+            ItemName : String(20);
+            toHeader : association [*,1..1] to Header on toHeader.PurchaseId = POHeader;
+    }
+    
+    define view ItemView as
+    select from Item {
+        
+    	POHeader,
+    	toHeader.POName
+    };
+}

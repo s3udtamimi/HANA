@@ -8,16 +8,22 @@ BEGIN
 	TRUNCATE TABLE "Product_TEXT";
 	
 	
-	ex_product = SELECT  p."Id" , 'EN' "Language", p."ProductName" "Text" ,'1980-01-01' "ValidFrom",'9999-12-31' "ValidTo"
+	ex_product = SELECT  p."Id" , 'E' "Language", p."ProductName" "Text" ,'1980-01-01' "ValidFrom",'9999-12-31' "ValidTo"
 					FROM "Eastwind.Product" p;
 	
 	ex_product."ValidTo"[1]='1997-07-24';
 	
 	ex_product."Id"[79] = '1';
-	ex_product."Language"[79] = 'EN';
+	ex_product."Language"[79] = 'E';
 	ex_product."Text"[79] = 'Chai_New';
 	ex_product."ValidFrom"[79] = '1997-07-25';
 	ex_product."ValidTo"[79] = '9999-12-31';
+	
+	ex_product."Id"[80] = '1';
+	ex_product."Language"[80] = 'A';
+	ex_product."Text"[80] = 'عربي';
+	ex_product."ValidFrom"[80] = '1997-07-25';
+	ex_product."ValidTo"[80] = '9999-12-31';
 	
 	INSERT INTO "Product_TEXT"
 		SELECT * FROM :ex_product;
